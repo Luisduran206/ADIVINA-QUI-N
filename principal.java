@@ -1,212 +1,328 @@
 import java.util.Scanner;
-import java.util.ArrayList;
 import java.util.Random;
-public class principal {
+public class principal extends Persona{
 
-	public static void main(String[] args) {
-		Scanner scan = new Scanner(System.in);
-		System.out.println("\t\t BIENVENIDO A \n\t\t ADIVINA QUIÉN \n");
-		System.out.println("Tus personajes y sus respectivos atributos son los siguientes: \n");
-		System.out.println("1. El personaje tiene LENGUA VERDE");
-		System.out.println("2. El personaje tiene CABELLO AFRO");
-		System.out.println("3. El personaje tiene ALAS DE ÁNGEL");
-		System.out.println("4. El personaje tiene COLA DE BURRO \n");
-		String[] names = {"Nemo", "Gru", "Dory", "BlancaNieves", "Aladdín", "MikeWasaousky", "Sullyvan", "DarthVader", "RalphElDemoledor", "MannyALaObra"};
-		Persona[] individuos = new Persona[10];
-		individuos[0] = new Persona();
-		individuos[1] = new Persona();
-		individuos[2] = new Persona();
-		individuos[3] = new Persona();
-		individuos[4] = new Persona();
-		individuos[5] = new Persona();
-		individuos[6] = new Persona();
-		individuos[7] = new Persona();
-		individuos[8] = new Persona();
-		individuos[9] = new Persona();
-		
-		Random generadorAleatorio = new Random();
-        for (int i = names.length - 1; i > 0; i--) {
+	String[] names = {"Nemo", "Gru", "Dory", "BlancaNieves", "Aladdín", "MikeWasaousky", "Sullyvan", "DarthVader", "RalphElDemoledor", "MannyALaObra"};
+	String[] listaAtributos1Fisicos = {"lenguaDeGato", "lenguaDeGato", "cabelloAfro", "cabelloAfro", "jorobaJorobada", "jorobaJorobada", "ojosSaltones", "ojosSaltones", "canasVerdes", "canasVerdes"};
+	String[] listaAtributos2Adornos = {"gafas", "gafas", "perfoAesthetic", "perfoAesthetic", "bufanda", "bufanda", "pijama", "pijama", "capaDeInvisibilidad", "capaDeInvisibilidad"};
+	String[] listaAtributos3Act = {"leeLibros", "leeLibros", "daClases", "daClases", "vuela", "vuela", "sabeProgramar", "sabeProgramar", "juegaPadel", "juegaPadel"};
+	String[] listaAtributos4Lugar = {"viveEnTlaxcala", "viveEnTlaxcala", "viveEnNarnia", "viveEnNarnia", "viveEnWakanda", "viveEnWakanda", "viveEnHogwarts", "viveEnHogwarts", "viveEnCholula", "viveEnCholula"};
+	int top = 0;
+	Random generadorAleatorio = new Random();
+	Scanner scan = new Scanner(System.in);
+	public principal() {
+		super();
+	}
+	
+	public void cosasAleatorios(String[]names) {
+		for (int i = names.length - 1; i > 0; i--) {
             int indiceAleatorio = generadorAleatorio.nextInt(i + 1);
             String temporal = names[indiceAleatorio];
             names[indiceAleatorio] = names[i];
             names[i] = temporal;
         }
-        for(int x = 0; x < names.length; x++) {
-        	String name = names [x];
-        	individuos[x].setNombre(name);
-        }
-        
-		int contadorLenguaVerde = 0;
-		int contadorCabelloAfro = 0;
-		int contadorAlasDeAngel = 0;
-		int contadorColaDeBurro = 0;
+	}
+	
+	public String pop(String[]stack, int top) {
+		this.top = top;
+		if(top==0) {
+			System.out.println("Stack is empty");
+			return (stack[top]);
+		}else {
+			String eliminado;
+			eliminado = stack[top-1];
+			top--;
+			return eliminado;
+		}
+	}
+	
+	public void generarPersonajes() {
+		Persona[] individuos = new Persona[10];
+		int tope = names.length;
+		int numRandom = generadorAleatorio.nextInt(10);
 		
-		for(int i = 0; i < individuos.length; i++) {
-			if(individuos[i].getLenguaVerde()) {
-				contadorLenguaVerde++;
-			}
-			if(individuos[i].getCabelloAfro()) {
-				contadorCabelloAfro++;
-			}
-			if(individuos[i].getAlasDeAngel()) {
-				contadorAlasDeAngel++;
-			}
-			if(individuos[i].getColaDeBurro()) {
-				contadorColaDeBurro++;
-			}
-			System.out.print(individuos[i].getNombre()+": "+ individuos[i].getLenguaVerde() +", " + individuos[i].getCabelloAfro() +", "+ individuos[i].getAlasDeAngel() +", "+ individuos[i].getColaDeBurro() + "\n");
+		cosasAleatorios(names);
+		cosasAleatorios(listaAtributos1Fisicos);
+		cosasAleatorios(listaAtributos2Adornos);
+		cosasAleatorios(listaAtributos3Act);
+		cosasAleatorios(listaAtributos4Lugar);
+		
+		for(int i = 0; i < names.length; i++) {
+			individuos[i] = new principal();
+			individuos[i].setNombre(pop(names,tope));
+			individuos[i].setAtributo1(pop(listaAtributos1Fisicos, tope));
+			individuos[i].setAtributo2(pop(listaAtributos2Adornos, tope));
+			individuos[i].setAtributo3(pop(listaAtributos3Act, tope));
+			individuos[i].setAtributo4(pop(listaAtributos4Lugar, tope));
+			tope--;
 		}
-		System.out.println("\nEl número de personajes que tienen LENGUA VERDE es: " + contadorLenguaVerde);
-		System.out.println("El número de personajes que tienen CABELLO AFRO es: " + contadorCabelloAfro);
-		System.out.println("El número de personajes que tienen ALAS DE ÁNGEL es: " + contadorAlasDeAngel);
-		System.out.println("El número de personajes que tienen COLA DE BURRO es: " + contadorColaDeBurro);
-		String[] nombres = names;
-		Random random = new Random();
-		int elegido = random.nextInt(10);
-		System.out.println(individuos[elegido].getNombre());
-		//String chosenOne = names[elegido.nextInt(10)];
-		System.out.println("\n\tPara adivinar el personaje que el programa amablemente escogió, \n\tdeberás selecccionar el atributo que quieres evaluar\t");
-		System.out.println("1. Lengua verde  2. Cabello Afro  3. Alas de ángel  4. Cola de burro\t");
-		System.out.println("TEN CUIDADO, SOLO PUEDES HACERME 3 PREGUNTAS PARA CONOCER MI PERSONAJE");
-		boolean[] bool = {true, true, true, true, true, true, true, true, true, true};
-		for(int i = 0; i < 3; i++) {
-			System.out.println("\n¿Qué atributo quisieras evaluar en mi personaje? Intruce el número acontinuación: ");
-			String str = scan.nextLine();
-			int elección = Integer.parseInt(str);
-			switch(elección) {
-			case 1:                                           //LENGUA VERDE
-			   if(individuos[elegido].getLenguaVerde()) {
-				   System.out.println("Mi personaje SI tiene lengua verde, y te elimino los que no");
-				   for(int o = 0; o < bool.length; o++) {
-						if(bool[o]) {
-							if(individuos[o].getLenguaVerde()) {
-								bool[o] = true;
-							} else {
-								bool[o] = false;
-							}
-						}
-					}
-				} else {
-					System.out.println("Mi personaje NO tiene lengua verde, y te elimino los que si");
-					for(int o = 0; o < names.length; o++) {
-						if(individuos[o].getLenguaVerde()) {
-							bool[o] = false;
-						} else {
-							bool[o] = true;
-						}
-					}
-				}
-				for(int x = 0; x < bool.length; x++) {
-					if(bool[x]) {
-						System.out.println("\t"+ individuos[x].getNombre());
-					}
-				}
-				break;
-				
-			case 2:                                          //CABELLO AFRO
-				if(individuos[elegido].getCabelloAfro()) {
-					 System.out.println("Mi personaje SI tiene cabello afro, y te elimino los que no");
-					  for(int o = 0; o < bool.length; o++) {
-							if(bool[o]) {
-								if(individuos[o].getCabelloAfro()) {
-									bool[o] = true;
-								} else {
-									bool[o] = false;
-								}
-							}
-						}
-					} else {
-						System.out.println("Mi personaje NO tiene cabello afro, y te elimino los que si");
-						for(int o = 0; o < names.length; o++) {
-							if(individuos[o].getCabelloAfro()) {
-								bool[o] = false;
-							} else {
-								bool[o] = true;
-							}
-						}
-					}
-					for(int x = 0; x < bool.length; x++) {
-						if(bool[x]) {
-							System.out.println("\t"+ individuos[x].getNombre());
-						}
-					}
-				break;
-				
-			case 3:	                                        //ALAS DE ANGEL
-				if(individuos[elegido].getAlasDeAngel()) {
-					   System.out.println("Mi personaje SI tiene alas de ángel, y te elimino los que no");
-					   for(int o = 0; o < bool.length; o++) {
-							if(bool[o]) {
-								if(individuos[o].getAlasDeAngel()) {
-									bool[o] = true;
-								} else {
-									bool[o] = false;
-								}
-							}
-						}
-					} else {
-						System.out.println("Mi personaje NO tiene alas de ángel, y te elimino los que si");
-						for(int o = 0; o < names.length; o++) {
-							if(individuos[o].getAlasDeAngel()) {
-								bool[o] = false;
-							} else {
-								bool[o] = true;
-							}
-						}
-					}
-					for(int x = 0; x < bool.length; x++) {
-						if(bool[x]) {
-							System.out.println("\t"+ individuos[x].getNombre());
-						}
-					}
-				break;
-				
-			case 4:                                          //COLA DE BURRO
-				if(individuos[elegido].getColaDeBurro()) {
-					   System.out.println("Mi personaje SI tiene cola de  burro, y te elimino los que no");
-					   for(int o = 0; o < bool.length; o++) {
-							if(bool[o]) {
-								if(individuos[o].getColaDeBurro()) {
-									bool[o] = true;
-								} else {
-									bool[o] = false;
-								}
-							}
-						}
-					} else {
-						System.out.println("Mi personaje NO tiene cola de burro, y te elimino los que si");
-						for(int o = 0; o < names.length; o++) {
-							if(individuos[o].getColaDeBurro()) {
-								bool[o] = false;
-							} else {
-								bool[o] = true;
-							}
-						}
-					}
-					for(int x = 0; x < bool.length; x++) {
-						if(bool[x]) {
-							System.out.println("\t"+ individuos[x].getNombre());
-						}
-					}
-				break;
-				
-			default:
-				System.out.println("Opción inválida...");
-				break;	
+		for(int j = 0; j < names.length; j++) {
+			System.out.print(individuos[j].getNombre()+": "+ individuos[j].getAtributo1() +", " + individuos[j].getAtributo2() +", "+ individuos[j].getAtributo3() +", "+ individuos[j].getAtributo4() + "\n");
 		}
-	}	
-
-		System.out.println("\n¿Ahora lo sabes? Adivina el nombre de mi personaje y escríbelo a continuación...");
-		System.out.println("Tómate la molestia de escribirlo tal como está en la primera lista: ");
-		String miPersonaje = individuos[elegido].getNombre().replace(" ", "");
-		String intento = scan.next();
-		String intentoFinal = intento.replace(" ", "");
-		if(intentoFinal.equals(miPersonaje)) {
-			System.out.println("FELICIDADES, en efecto "+individuos[elegido].getNombre()+" era mi personaje");
+	
+		System.out.println("\n\t\t BIENVENIDO A \n\t\t ADIVINA QUIÉN \n");
+		System.out.println("Tus personajes y sus respectivos atributos son los anteriores: \n");
+		System.out.print("Sus atributos están en el orden de atributosFísicos, accesorios, actividad y lugarDeVivienda");
+		System.out.print("\nAsí que, ¿qué atributo quisieras evaluar?");
+		System.out.print("\n1. AtributosFísicos \n2. Accesorios \n3. Actividad \n4. LugarDeVivienda");
+		String str = scan.nextLine();
+		int eleccion = Integer.parseInt(str);
+		switch(eleccion) {
+		case 1: 
+			System.out.println("¿Qué característica física crees que tiene mi personaje?");
+			System.out.println("1. lenguaDeGato  2. cabelloAfro  3. jorobaJorobada  4. ojosSaltones 5. canasVerdes");
+			String fisico = scan.nextLine();
+			int seleccion1 = Integer.parseInt(fisico);
+			switch(seleccion1) {
+			case 1:
+				if ("lenguaDeGato" == individuos[numRandom].getAtributo1()) {
+	        		for(int i=0;i<10;i++) {
+	        			if(individuos[i].getAtributo1()==individuos[numRandom].getAtributo1()){
+	        			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+	        	        } else {
+	        	        	System.out.println(individuos[i].getNombre()+"---,---- y --- ");
+	        	        	}
+	        	    }
+	        	}else {
+	        		System.out.println("El personaje no tiene ese físico, intente con otro");
+	        	}
+	        	break;
+	        
+			case 2: 
+				if ("cabelloAfro" == individuos[numRandom].getAtributo1()) {
+	        		for(int i=0;i<10;i++) {
+	        			if(individuos[i].getAtributo1()==individuos[numRandom].getAtributo1()){
+	        			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+	        	        } else {
+	        	        	System.out.println(individuos[i].getNombre()+"---,---- y --- ");
+	        	        	}
+	        	    }
+	        	}else {
+	        		System.out.println("El personaje no tiene ese físico, intente con otro"); 
+	        	}
+	        	break;
+			case 3: 
+				if ("jorobaJorobada" == individuos[numRandom].getAtributo1()) {
+	        		for(int i=0;i<10;i++) {
+	        			if(individuos[i].getAtributo1()==individuos[numRandom].getAtributo1()){
+	        			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+	        	        } else {
+	        	        	System.out.println(individuos[i].getNombre()+"---,---- y --- ");
+	        	        	}
+	        	    }
+	        	} else {
+	        		System.out.println("El personaje no tiene ese físico, intente con otro");
+	        	}
+	        	break;
+			case 4: 
+				if ("ojosSaltones" == individuos[numRandom].getAtributo1()) {
+	        		for(int i=0;i<10;i++) {
+	        			if(individuos[i].getAtributo1()==individuos[numRandom].getAtributo1()){
+	        			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+	        	        } else {
+	        	        	System.out.println(individuos[i].getNombre()+"---,---- y --- ");
+	        	        	}
+	        	    }
+	        	} else {
+	        		System.out.println("El personaje no tiene ese físico, intente con otro");
+	        	}
+	        	break;
+			case 5: 
+				if ("canasVerdes" == individuos[numRandom].getAtributo1()) {
+	        		for(int i=0;i<10;i++) {
+	        			if(individuos[i].getAtributo1()==individuos[numRandom].getAtributo1()){
+	        			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+	        	        } else {
+	        	        	System.out.println(individuos[i].getNombre()+"---,---- y --- ");
+	        	        	}
+	        	    }
+	        	} else {
+	        		System.out.println("El personaje no tiene ese físico, intente con otro");
+	        	}
+	        	break;
+			}
+		case 2:
+			System.out.println("¿Qué accesorio crees que tiene mi personaje?");
+			System.out.println("1. gafas  2. perfoAesthetic  3. bufanda  4. pijama  5. capaDeInvisibilidad");
+			String accesorio = scan.nextLine();
+			int seleccion2 = Integer.parseInt(accesorio);
+			switch(seleccion2) {
+			case 1: 
+				for(int i=0;i<10;i++) {
+            		String prenda = individuos[i].getAtributo3();
+            		if (prenda == "gafas") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+            	}
+				break;
+			case 2: 
+				for(int i=0;i<10;i++) {
+            		String prenda = individuos[i].getAtributo3();
+            		if (prenda == "perfoAesthetic") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 3: 
+				for(int i=0;i<10;i++) {
+            		String prenda = individuos[i].getAtributo3();
+            		if (prenda == "bufanda") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" y "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" y es "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 4:
+				for(int i=0;i<10;i++) {
+            		String prenda = individuos[i].getAtributo3();
+            		if (prenda == "pijama") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 5:
+				for(int i=0;i<10;i++) {
+            		String prenda = individuos[i].getAtributo3();
+            		if (prenda == "capaDeInvisibilidad") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			}
+		case 3: 
+			System.out.println("¿Qué hace mi personaje?");
+			System.out.println("1. leeLibros  2. daClases  3. vuela  4. sabeProgramar  5. juegaPadel");
+			String actividad = scan.nextLine();
+			int seleccion3 = Integer.parseInt(actividad);
+			switch(seleccion3) {
+			case 1: 
+				for(int i=0;i<10;i++) {
+            		String act = individuos[i].getAtributo3();
+            		if (act == "leeLibros") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 2: 
+				for(int i=0;i<10;i++) {
+            		String act = individuos[i].getAtributo3();
+            		if (act == "daClases") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 3: 
+				for(int i=0;i<10;i++) {
+        		  String act = individuos[i].getAtributo3();
+        		  if (act == "vuela") {
+        			 System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+        	      } else {
+        	    	 System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+        	      }
+			    } 
+			   break;
+			case 4:
+				for(int i=0;i<10;i++) {
+            		String act = individuos[i].getAtributo3();
+            		if (act == "sabeProgramar") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 5: 
+				for(int i=0;i<10;i++) {
+            		String act = individuos[i].getAtributo3();
+            		if (act == "juegaPadel") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			}
+		case 4:
+			System.out.println("¿Dónde vive mi personaje?");
+			System.out.println("1. leeLibros  2. daClases  3. vuela  4. sabeProgramar  5. juegaPadel");
+			String vive = scan.nextLine();
+			int seleccion4 = Integer.parseInt(vive);
+			switch(seleccion4) {
+			case 1: 
+				for(int i=0;i<10;i++) {
+            		String act = individuos[i].getAtributo3();
+            		if (act == "viveEnTlaxcala") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 2: 
+				for(int i=0;i<10;i++) {
+            		String act = individuos[i].getAtributo3();
+            		if (act == "viveEnNarnia") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 3: 
+				for(int i=0;i<10;i++) {
+            		String act = individuos[i].getAtributo3();
+            		if (act == "viveEnWakanda") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 4:
+				for(int i=0;i<10;i++) {
+            		String act = individuos[i].getAtributo3();
+            		if (act == "viveEnHogwarts") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			case 5:
+				for(int i=0;i<10;i++) {
+            		String act = individuos[i].getAtributo3();
+            		if (act == "viveEnCholula") {
+            			System.out.println(individuos[i].getNombre()+": tiene "+individuos[i].getAtributo1()+" , "+individuos[i].getAtributo2()+", "+individuos[i].getAtributo3()+" , "+individuos[i].getAtributo4());
+            	    } else {
+            	    	System.out.println(individuos[i].getNombre()+"---,---- y --- ");	
+            	    }
+				}
+				break;
+			}
+	}
+		System.out.println("\n¿Ahora lo sabes? Adivina el nombre de mi personaje y escribe el índice a continuación...");
+		String choice = scan.nextLine();
+		int decision = Integer.parseInt(choice);
+		if(decision == numRandom++) {
+			System.out.println("FELICIDADES, en efecto "+individuos[numRandom].getNombre()+" era mi personaje");
 			System.out.println("Gracias por jugar conmigo <3");
 		} else {
-			System.out.println("LO SIENTO MUCHO, mi personaje era "+ individuos[elegido].getNombre() +", pero fue un buen intento");
+			System.out.println("LO SIENTO MUCHO, mi personaje era "+ individuos[numRandom].getNombre() +", pero fue un buen intento");
 			System.out.println("Gracias por jugar conmigo <3");
 		}
-}
+	
+   }
 }
