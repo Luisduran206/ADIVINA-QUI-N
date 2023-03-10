@@ -1,25 +1,14 @@
-import java.util.Random;
-public class Persona {
+
+public abstract class Persona {
 
 	private String[] names = {"Nemo", "Gru", "Dory", "Blanca Nieves", "Aladdín", "Mike Wasaousky", "Sullyvan", "Elias", "Ralph El Demoledor", "Manny a la obra"};
 	private String name;
-	private boolean lenguaVerde;
-	private boolean cabelloAfro;
-	private boolean alasDeAngel;
-	private boolean colaDeBurro;
-	
-	Random random = new Random();
-	int numeroRandom = random.nextInt();
-	boolean booleanoRandom1 = random.nextBoolean();
-	boolean booleanoRandom2 = random.nextBoolean();
-	boolean booleanoRandom3 = random.nextBoolean();
-	boolean booleanoRandom4 = random.nextBoolean();
+	private String atributo1;
+	private String atributo2;
+	private String atributo3;
+	private String atributo4;
 	
 	public Persona() {
-		this.lenguaVerde = booleanoRandom1;
-		this.cabelloAfro = booleanoRandom2;
-		this.alasDeAngel = booleanoRandom3;
-		this.colaDeBurro = booleanoRandom4;
 	}
 
 	public void setNombre(String name) {
@@ -30,20 +19,36 @@ public class Persona {
 		return name;
 	}
 	
-	public boolean getLenguaVerde() {
-		return lenguaVerde;
+	public void setAtributo1(String atributo1) {
+		this.atributo1 = atributo1;
 	}
 	
-	public boolean getCabelloAfro() {
-		return cabelloAfro;
+	public String getAtributo1() {
+		return atributo1;
 	}
 	
-	public boolean getAlasDeAngel() {
-		return alasDeAngel;
+	public void setAtributo2(String atributo2) {
+		this.atributo2 = atributo2;
 	}
 	
-	public boolean getColaDeBurro() {
-		return colaDeBurro;
+	public String getAtributo2() {
+		return atributo2;
+	}
+	
+	public void setAtributo3(String atributo3) {
+		this.atributo3 = atributo3;
+	}
+	
+	public String getAtributo3() {
+		return atributo3;
+	}
+	
+	public void setAtributo4(String atributo4) {
+		this.atributo4 = atributo4;
+	}
+	
+	public String getAtributo4() {
+		return atributo4;
 	}
 
 }
